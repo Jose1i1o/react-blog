@@ -1,30 +1,26 @@
 import React, { useState } from 'react';
 
-const AddCommentForm = () => {
+const AddCommentForm = ({ articleName, setArticleInfo }) => {
     const [userName, setUserName] = useState('');
     const [commentText, setCommentText] = useState('');
 
-    const addComment = async ({ articleName, setArticleInfo }) => {
-        const response = await fetch(`/api/articles/${articleName}`, {
+    const addComment = async () => {
+        const response = await fetch(`/api/articles/${articleName}/add-comment`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                userName,
+                userName: userName,
                 text: commentText
             })
         });
+        console.log(response);
         const body = await response.json();
+        console.log(body);
         setArticleInfo(body);
         setUserName('');
         setCommentText('');
-
-        if (response.ok) {
-            window.location.reload();
-        } else {
-            alert('Error: ' + response.statusText);
-        }
     }
 
     return (
