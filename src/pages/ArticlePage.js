@@ -3,6 +3,7 @@ import articleFeed from './articleFeed';
 import { useParams } from 'react-router-dom';
 import ArticleList from '../components/ArticleList';
 import NotFoundPage from './NotFoundPage';
+import CommentsList from '../components/CommentsList';
 
 const ArticlePage = ({ match }) => {
 
@@ -12,13 +13,12 @@ const ArticlePage = ({ match }) => {
     const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
 
     useEffect(() => {
-        const fetchData = async() => {
+        const fetchData = async () => {
             const result = await fetch(`/api/articles/${name}`);
             const body = await result.json();
             setArticleInfo(body);
         }
         fetchData();
-        setArticleInfo({ upvotes: Math.ceil(Math.random() * 10) });
     }, [name]);
 
     if(!article) return <NotFoundPage />;
@@ -32,6 +32,7 @@ const ArticlePage = ({ match }) => {
             { article.content.map((paragraph, key) => (
                 <p key={key}>{ paragraph }</p>
             ))}
+            <CommentsList comments={articleInfo.comments} />
             <h3>Other articles:</h3>
             <ArticleList articles={otherArticles} />
         </>
