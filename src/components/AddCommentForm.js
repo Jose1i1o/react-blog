@@ -34,7 +34,7 @@ const AddCommentForm = () => {
             <label htmlFor="userName">Name</label>
             <input type="text" id="userName" value={userName} onChange={(e) => setUserName(e.target.value)}/>
             <label htmlFor="comment">Comment</label>
-            <textarea rows='4' cols='50' value={commentText} onChange={(e) => setCommentText(e.target.value)} placeholder='Type your comment here' id="comment" />
+            <textarea rows='4' cols='50' id="comment" value={commentText} onChange={(e) => setCommentText(e.target.value)}/>
             <button onClick = {() => addComment()} >Submit</button>
         </form>
     </div>
